@@ -11,7 +11,9 @@ lazy val commonSettings = Seq(
 )
 
 lazy val root = project in file(".") aggregate (
-  lesson3
+  lesson3,
+  lesson4
 )
 
 lazy val lesson3 = project in file("lesson3") settings commonSettings
+lazy val lesson4 = project in file("lesson4") settings commonSettings
