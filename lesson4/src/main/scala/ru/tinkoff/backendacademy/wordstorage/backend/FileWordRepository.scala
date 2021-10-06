@@ -8,7 +8,7 @@ class FileWordRepository(file: Path) extends WordRepository {
   override def get(word: String): Option[String] = Files.lines(file).filter(word.equals).findAny().toScala
 
   override def put(word: String): Unit =
-    Files.writeString(file, word + System.lineSeparator(), StandardOpenOption.APPEND)
+    Files.write(file, (allLines.toSeq :+ word).asJava)
 
   override def delete(word: String): Unit = Files.write(file, allLines.filterNot(word.equals).asJava)
 

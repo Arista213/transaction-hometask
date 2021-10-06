@@ -2,6 +2,7 @@ package ru.tinkoff.backendacademy.wordstorage.console
 
 import ru.tinkoff.backendacademy.wordstorage.backend.WordRepository
 
+import java.io.Console
 import scala.io.StdIn.readLine
 
 class WordStorageConsoleFrontend(backend: WordRepository) {

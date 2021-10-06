@@ -8,4 +8,5 @@ trait WordRepository {
 
   def delete(word: String): Unit
 
+  def deleteIfExists(word: String) = if (get(word).isDefined) delete(word)
 }
