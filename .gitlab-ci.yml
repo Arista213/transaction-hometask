@@ -5,8 +5,10 @@ stages:
 
 test:
   script:
-    sbt scalafmtCheckAll test
+    sbt scalafmtCheckAll coverage test coverageReport coverageAggregate
   artifacts:
     reports:
       junit:
-      - ./*/target/test-reports/*.xml
+        - ./*/target/test-reports/*.xml
+      cobertura:
+        - ./*/target/*/coverage-report/cobertura.xml
