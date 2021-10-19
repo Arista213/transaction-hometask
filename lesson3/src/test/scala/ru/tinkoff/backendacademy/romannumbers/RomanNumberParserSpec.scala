@@ -9,7 +9,7 @@ class RomanNumberParserSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "parse I" in {
-    parser.parse("I") shouldEqual Right(1)
+    parser.parse("I") shouldEqual Right(2)
   }
 
   it should "parse V" in {
