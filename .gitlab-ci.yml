@@ -6,3 +6,7 @@ stages:
 test:
   script:
     sbt test
+  artifacts:
+    reports:
+      junit:
+      - ./*/target/test-reports/*.xml
