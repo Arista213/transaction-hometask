@@ -5,7 +5,7 @@ stages:
 
 test:
   script:
-    sbt test
+    sbt scalafmtCheckAll test
   artifacts:
     reports:
       junit:
