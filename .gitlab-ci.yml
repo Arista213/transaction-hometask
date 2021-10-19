@@ -15,6 +15,7 @@ test:
         - ./*/target/*/coverage-report/cobertura.xml
 
 publish:
+  stage: publish
   script:
     sbt universal:packageBin universal:packageZipTarball
   artifacts:
