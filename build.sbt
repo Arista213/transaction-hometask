@@ -25,5 +25,7 @@ lazy val root = project in file(".") aggregate (
 )
 
 lazy val lesson3 = project in file("lesson3") settings commonSettings
-lazy val lesson4 = project in file("lesson4") settings commonSettings
+lazy val lesson4 = (project in file("lesson4"))
+  .settings(commonSettings)
+  .enablePlugins(JavaAppPackaging, AshScriptPlugin, DockerPlugin)
 lazy val lesson6 = project in file("lesson6") settings commonSettings ++ catsSettings

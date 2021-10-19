@@ -2,6 +2,7 @@ image: "hseeberger/scala-sbt:11.0.11_1.5.4_2.13.6"
 
 stages:
   - test
+  - publish
 
 test:
   script:
@@ -12,3 +13,10 @@ test:
         - ./*/target/test-reports/*.xml
       cobertura:
         - ./*/target/*/coverage-report/cobertura.xml
+
+publish:
+  script:
+    sbt universal:packageBin universal:packageZipTarball
+  artifacts:
+    paths:
+      - lesson4/target/universal/*.zip
