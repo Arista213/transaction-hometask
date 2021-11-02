@@ -1,0 +1,23 @@
+image: "hseeberger/scala-sbt:11.0.11_1.5.4_2.13.6"
+
+stages:
+  - test
+  - publish
+
+test:
+  script:
+    sbt scalafmtCheckAll coverage test coverageReport coverageAggregate
+  artifacts:
+    reports:
+      junit:
+        - ./*/target/test-reports/*.xml
+      cobertura:
+        - ./*/target/*/coverage-report/cobertura.xml
+
+publish:
+  stage: publish
+  script:
+    sbt universal:packageBin universal:packageZipTarball
+  artifacts:
+    paths:
+      - lesson4/target/universal/*.zip

@@ -4,16 +4,19 @@ version := "0.1"
 
 lazy val commonSettings = Seq(
   libraryDependencies ++= Seq(
-    "org.scalamock" %% "scalamock" % "5.1.0" % Test,
+    "org.scalamock" %% "scalamock" % "5.1.0"  % Test,
     "org.scalatest" %% "scalatest" % "3.2.10" % Test
   ),
-  scalaVersion := "2.13.6"
+  scalaVersion := "2.13.6",
+  coverageEnabled := true,
+  coverageFailOnMinimum := true,
+  coverageMinimumStmtTotal := 50
 )
 
 lazy val catsSettings = Seq(
   libraryDependencies ++= Seq(
     "org.typelevel" %% "cats-core" % "2.3.0"
-  ),
+  )
 )
 
 lazy val root = project in file(".") aggregate (
@@ -22,5 +25,10 @@ lazy val root = project in file(".") aggregate (
 )
 
 lazy val lesson3 = project in file("lesson3") settings commonSettings
-lazy val lesson4 = project in file("lesson4") settings commonSettings
+lazy val lesson4 = (project in file("lesson4"))
+  .settings(commonSettings)
+  .settings(
+    Compile / mainClass := Some("ru.tinkoff.backendacademy.wordstorage.ConsoleInMemory"),
+  )
+  .enablePlugins(JavaAppPackaging, AshScriptPlugin, DockerPlugin)
 lazy val lesson6 = project in file("lesson6") settings commonSettings ++ catsSettings
