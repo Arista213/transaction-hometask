@@ -1,3 +1,5 @@
+import sbt.addCompilerPlugin
+
 name := "backend-academy"
 
 version := "0.1"
@@ -19,6 +21,23 @@ lazy val catsSettings = Seq(
   )
 )
 
+val circeVersion = "0.14.1"
+val tapirVersion = "0.19.0-M13"
+
+lazy val zioTapirSettings = Seq(
+  libraryDependencies ++= Seq(
+    "com.softwaremill.sttp.tapir" %% "tapir-zio-http4s-server"  % tapirVersion,
+    "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs"       % tapirVersion,
+    "com.softwaremill.sttp.tapir" %% "tapir-openapi-circe-yaml" % tapirVersion,
+    "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui"         % tapirVersion,
+    "io.circe"                    %% "circe-core"               % circeVersion,
+    "io.circe"                    %% "circe-generic"            % circeVersion,
+    "io.circe"                    %% "circe-parser"             % circeVersion
+//    "io.d11"                      %% "zhttp"                   % "v1.0.0.0-RC17"
+  ),
+  addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
+)
+
 lazy val root = project in file(".") aggregate (
   lesson3,
   lesson4
@@ -32,3 +51,4 @@ lazy val lesson4 = (project in file("lesson4"))
   )
   .enablePlugins(JavaAppPackaging, AshScriptPlugin, DockerPlugin)
 lazy val lesson6 = project in file("lesson6") settings commonSettings ++ catsSettings
+lazy val lesson8 = project in file("lesson8") settings commonSettings ++ zioTapirSettings
