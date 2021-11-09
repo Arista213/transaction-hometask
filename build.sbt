@@ -47,8 +47,9 @@ lazy val lesson3 = project in file("lesson3") settings commonSettings
 lazy val lesson4 = (project in file("lesson4"))
   .settings(commonSettings)
   .settings(
-    Compile / mainClass := Some("ru.tinkoff.backendacademy.wordstorage.ConsoleInMemory"),
+    Compile / mainClass := Some("ru.tinkoff.backendacademy.wordstorage.ConsoleInMemory")
   )
   .enablePlugins(JavaAppPackaging, AshScriptPlugin, DockerPlugin)
 lazy val lesson6 = project in file("lesson6") settings commonSettings ++ catsSettings
 lazy val lesson8 = project in file("lesson8") settings commonSettings ++ zioTapirSettings
+lazy val lesson9 = project in file("lesson9") settings commonSettings ++ catsSettings
