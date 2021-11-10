@@ -14,27 +14,26 @@ object Demo {
       val cinema = name
     }
 
-    def buyTicket: Ticket = new Ticket
+    def buyTicket: Ticket                  = new Ticket
     def refundTicket(ticket: Ticket): Unit = ()
   }
 
-  val venom = new Cinema("venom")
+  val venom   = new Cinema("venom")
   val bond007 = new Cinema("venom")
 
-  bond007.refundTicket(venom.buyTicket)
+//  bond007.refundTicket(venom.buyTicket)
   venom.refundTicket(venom.buyTicket)
 
   class Cinema2(name: String) {
     type Ticket = MegaTicket
-    def buyTicket: Ticket = MegaTicket(name)
+    def buyTicket: Ticket                  = MegaTicket(name)
     def refundTicket(ticket: Ticket): Unit = ()
   }
 
   val avengers = new Cinema2("avengers")
-  val dune = new Cinema2("dune")
+  val dune     = new Cinema2("dune")
 
   dune.refundTicket(avengers.buyTicket)
-
 
   abstract class CustomCinema(val name: String) {
     type Ticket
@@ -43,21 +42,22 @@ object Demo {
   }
 
   object CustomCinema {
-    def make[T](name: String, controller: CustomCinema => T): CustomCinema = new CustomCinema(name) {
+    def make[T](name: String, controller: CustomCinema => T): CustomCinema = new CustomCinema(
+      name
+    ) {
       override type Ticket = T
 
       override def buyTicket: T = controller(this)
     }
-}
+  }
 
-  val adams = CustomCinema.make("Adams family", c => MegaTicket(c.name))
+  val adams     = CustomCinema.make("Adams family", c => MegaTicket(c.name))
   val superstar = CustomCinema.make("superstar", c => MegaTicket(c.name))
 
-  superstar.refundTicket(adams.buyTicket)
-
+//  superstar.refundTicket(adams.buyTicket)
 
   def main(args: Array[String]): Unit = {
-    val foo: String => Int = _.length
+    val foo: String => Int  = _.length
     val foo2: String => Int = (str) => str.length
 //
 //    println(List("1234", "123456").map(foo).map(_ * 2).toVector)
@@ -89,19 +89,17 @@ object Demo {
 
     val f = f3.andThen(println)
 
-
     recPrint(LazyList.iterate(0)(_ + 1).take(1).map(_.toString).toList, f)
 
     trait Range
 
-    object EmptyRange extends Range
+    object EmptyRange     extends Range
     class NonEmptyRange() extends Range
 
     trait Tree
 
     case class Node(left: Tree, right: Tree) extends Tree
-    case class Leaf(value: Int) extends Tree
-
+    case class Leaf(value: Int)              extends Tree
 
     println(RecursiveFactorial.get(10))
 
@@ -116,8 +114,6 @@ object Demo {
       a <- LazyFactorial.lazyGet(6)
       b <- LazyFactorial.lazyGet(4)
     } yield a * b
-
-
 
   }
 }

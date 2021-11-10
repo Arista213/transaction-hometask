@@ -1,3 +1,3 @@
 package ru.tinkoff.backendacademy
 
-case class Graph()
+case class Graph(map: Map[Int, Warehouse])
