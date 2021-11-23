@@ -53,3 +53,4 @@ lazy val lesson4 = (project in file("lesson4"))
 lazy val lesson6 = project in file("lesson6") settings commonSettings ++ catsSettings
 lazy val lesson8 = project in file("lesson8") settings commonSettings ++ zioTapirSettings
 lazy val lesson9 = project in file("lesson9") settings commonSettings ++ catsSettings
+lazy val lesson11 = project in file("lesson11") settings commonSettings
