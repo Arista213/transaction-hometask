@@ -21,8 +21,9 @@ lazy val catsSettings = Seq(
   )
 )
 
-val circeVersion = "0.14.1"
-val tapirVersion = "0.19.0"
+val circeVersion      = "0.14.1"
+val tapirVersion      = "0.19.0"
+val zioLoggingVersion = "0.5.14"
 
 lazy val zioTapirSettings = Seq(
   libraryDependencies ++= Seq(
@@ -31,6 +32,7 @@ lazy val zioTapirSettings = Seq(
     "com.softwaremill.sttp.tapir" %% "tapir-openapi-circe-yaml" % tapirVersion,
     "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui"         % tapirVersion,
     "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle"  % tapirVersion,
+    "dev.zio"                     %% "zio-logging"              % zioLoggingVersion,
     "io.circe"                    %% "circe-core"               % circeVersion,
     "io.circe"                    %% "circe-generic"            % circeVersion,
     "io.circe"                    %% "circe-parser"             % circeVersion

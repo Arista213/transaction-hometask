@@ -10,24 +10,24 @@ import sttp.tapir.ztapir._
 import zio.blocking.Blocking
 import zio.clock.Clock
 import zio.interop.catz._
-import zio.{RIO, ZEnv, ZIO}
+import zio.{RIO, ZIO}
 
 class ZioExampleHttp4sServer(
     endpoints: List[ZServerEndpoint[Any, Any]]
 ) {
 
-  val routes: HttpRoutes[RIO[Any with Clock with Blocking, *]] =
-    ZHttp4sServerInterpreter[Any]()
+  val routes: HttpRoutes[RIO[Clock with Blocking, *]] =
+    ZHttp4sServerInterpreter()
       .from(endpoints)
       .toRoutes
 
-  val swaggerRoutes: HttpRoutes[RIO[Any with Clock with Blocking, *]] =
+  val swaggerRoutes: HttpRoutes[RIO[Clock with Blocking, *]] =
     ZHttp4sServerInterpreter()
       .from(SwaggerInterpreter().fromServerEndpoints(endpoints, "Our pets", "1.0"))
       .toRoutes
 
-  val serve =
-    ZIO.runtime[ZEnv].flatMap { implicit runtime =>
+  val serve: ZIO[Clock with Blocking, Throwable, Unit] =
+    ZIO.runtime[Clock with Blocking].flatMap { implicit runtime =>
       BlazeServerBuilder[RIO[Clock with Blocking, *]]
         .withExecutionContext(runtime.platform.executor.asEC)
         .bindHttp(8080, "0.0.0.0")
