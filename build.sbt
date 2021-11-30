@@ -22,7 +22,7 @@ lazy val catsSettings = Seq(
 )
 
 val circeVersion = "0.14.1"
-val tapirVersion = "0.19.0-M13"
+val tapirVersion = "0.19.0"
 
 lazy val zioTapirSettings = Seq(
   libraryDependencies ++= Seq(
@@ -30,6 +30,7 @@ lazy val zioTapirSettings = Seq(
     "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs"       % tapirVersion,
     "com.softwaremill.sttp.tapir" %% "tapir-openapi-circe-yaml" % tapirVersion,
     "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui"         % tapirVersion,
+    "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle"  % tapirVersion,
     "io.circe"                    %% "circe-core"               % circeVersion,
     "io.circe"                    %% "circe-generic"            % circeVersion,
     "io.circe"                    %% "circe-parser"             % circeVersion
@@ -50,7 +51,7 @@ lazy val lesson4 = (project in file("lesson4"))
     Compile / mainClass := Some("ru.tinkoff.backendacademy.wordstorage.ConsoleInMemory")
   )
   .enablePlugins(JavaAppPackaging, AshScriptPlugin, DockerPlugin)
-lazy val lesson6 = project in file("lesson6") settings commonSettings ++ catsSettings
-lazy val lesson8 = project in file("lesson8") settings commonSettings ++ zioTapirSettings
-lazy val lesson9 = project in file("lesson9") settings commonSettings ++ catsSettings
+lazy val lesson6  = project in file("lesson6") settings commonSettings ++ catsSettings
+lazy val lesson8  = project in file("lesson8") settings commonSettings ++ zioTapirSettings
+lazy val lesson9  = project in file("lesson9") settings commonSettings ++ catsSettings
 lazy val lesson11 = project in file("lesson11") settings commonSettings
