@@ -1,0 +1,9 @@
+$ttl 38400
+demo.local.	IN	SOA	dns. test.tinkoff.ru. (
+			1648455108
+			60
+			3600
+			60
+			38400 )
+demo.local.	IN	NS	dns.
+logger.demo.local.	60	IN	A	172.16.231.2

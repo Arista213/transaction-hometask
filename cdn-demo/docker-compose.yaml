@@ -1,0 +1,63 @@
+version: '3'
+  
+services:
+  dns:
+    image: internetsystemsconsortium/bind9:9.18
+    networks:
+      - zone_a
+      - zone_b
+    environment:
+      - WEBMIN_INIT_SSL_ENABLED=false
+    ports:
+      - 9053:53/tcp
+      - 9053:53/udp
+      - 9153:953
+    volumes:
+      - ./config:/etc/bind:rw
+      - ./cache:/var/cache/bind:rw
+      - ./data:/var/lib/bind:rw
+      - ./log:/var/log:rw
+
+  logger_a:
+    image: mendhak/http-https-echo:23
+    environment:
+      ECHO_BACK_TO_CLIENT: false
+    networks:
+      - zone_a
+
+  logger_b:
+    image: mendhak/http-https-echo:23
+    environment:
+      ECHO_BACK_TO_CLIENT: false    
+    networks:
+      - zone_b
+
+  client_a:
+    image: wbitt/network-multitool
+    network_mode: bridge    
+    networks:
+      - zone_a
+    dns: 172.16.238.2
+
+  client_b:
+    image: wbitt/network-multitool
+    network_mode: bridge    
+    networks:
+      - zone_b
+    dns: 172.16.239.2
+          
+networks:
+  zone_a:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.230.0/24
+          gateway: 172.16.230.1
+  zone_b:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.231.0/24
+          gateway: 172.16.231.1
