@@ -7,7 +7,7 @@ import ru.tinkoff.backendacademy.wordstorage.backend.WordRepository
 trait WordRepositoryBehaviors {
   this: AnyFlatSpec with Matchers =>
 
-  def validWordRepository(testedRepository: => WordRepository) {
+  def validWordRepository(testedRepository: => WordRepository): Unit = {
 
     trait TestWiring {
       val repository: WordRepository = testedRepository

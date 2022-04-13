@@ -12,7 +12,7 @@ lazy val commonSettings = Seq(
   scalaVersion             := "2.13.8",
   coverageEnabled          := true,
   coverageFailOnMinimum    := true,
-  coverageMinimumStmtTotal := 50,
+  coverageMinimumStmtTotal := 40,
   fork                     := true
 )
 
