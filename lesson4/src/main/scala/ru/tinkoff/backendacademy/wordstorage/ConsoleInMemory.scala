@@ -1,6 +1,6 @@
 package ru.tinkoff.backendacademy.wordstorage
 
-import ru.tinkoff.backendacademy.wordstorage.backend.{FileWordRepository, InMemoryWordRepository}
+import ru.tinkoff.backendacademy.wordstorage.backend.FileWordRepository
 import ru.tinkoff.backendacademy.wordstorage.console.WordStorageConsoleFrontend
 
 import java.nio.file.Files

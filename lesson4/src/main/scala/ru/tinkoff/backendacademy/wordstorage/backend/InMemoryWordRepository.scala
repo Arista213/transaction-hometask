@@ -7,8 +7,12 @@ class InMemoryWordRepository extends WordRepository {
 
   override def get(word: String): Option[String] = words.find(word.equals)
 
-  override def put(word: String): Unit = words.add(word)
+  override def put(word: String): Unit = {
+    val _ = words.add(word)
+  }
 
-  override def delete(word: String): Unit = words.remove(word)
+  override def delete(word: String): Unit = {
+    val _ = words.remove(word)
+  }
 
 }

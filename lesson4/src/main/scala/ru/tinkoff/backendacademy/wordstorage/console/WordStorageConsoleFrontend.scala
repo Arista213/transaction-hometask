@@ -2,7 +2,6 @@ package ru.tinkoff.backendacademy.wordstorage.console
 
 import ru.tinkoff.backendacademy.wordstorage.backend.WordRepository
 
-import java.io.Console
 import scala.io.StdIn.readLine
 
 class WordStorageConsoleFrontend(backend: WordRepository) {
@@ -11,7 +10,7 @@ class WordStorageConsoleFrontend(backend: WordRepository) {
 
   def start(): Unit =
     while (true) {
-      val str = readLine
+      val str = readLine()
       str match {
         case commandAndWord("get", word)    => println(backend.get(word))
         case commandAndWord("put", word)    => backend.put(word)
