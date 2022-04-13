@@ -9,3 +9,6 @@ project/boot/
 .lib/
 .DS_Store
 .keep
+
+cache
+log

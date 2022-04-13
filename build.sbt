@@ -78,9 +78,11 @@ lazy val backendSampleSettings = Seq(
     "dev.zio"                     %% "zio-logging"              % "0.5.14",
     "dev.zio"                     %% "zio-interop-cats"         % "3.2.9.1",
     "com.h2database"               % "h2"                       % "2.1.210",
+    "org.xerial"                   % "sqlite-jdbc"              % "3.28.0",
     "org.tpolecat"                %% "doobie-core"              % "1.0.0-RC2",
     "org.tpolecat"                %% "doobie-h2"                % "1.0.0-RC2",
-    "io.getquill"                 %% "quill-jdbc-zio"           % "3.12.0"
+    "io.getquill"                 %% "quill-jdbc-zio"           % "3.12.0",
+    "org.liquibase"                % "liquibase-core"           % "3.6.1"
   ),
   addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
 )

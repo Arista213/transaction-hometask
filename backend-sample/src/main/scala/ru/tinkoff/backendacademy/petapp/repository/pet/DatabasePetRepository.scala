@@ -18,7 +18,7 @@ class DatabasePetRepository(ds: Has[DataSource]) extends PetRepository {
     value
       .map(_.headOption)
       .flatMap(s => ZIO.fromOption(s))
-      .mapError(_ => "Could not find pet")
+      .mapError(e => s"Could not find pet: ${e}")
   }
 
   def petByName(petId: Int) = {
