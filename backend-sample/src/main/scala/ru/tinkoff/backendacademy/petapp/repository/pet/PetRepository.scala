@@ -7,5 +7,5 @@ import zio.ZIO
 // => Either[E, A]
 // ZIO[Any, E, A]
 trait PetRepository {
-  def findPetName(petId: Int): ZIO[Any, String, String]
+  def findPetName(petId: Long): ZIO[Any, String, String]
 }

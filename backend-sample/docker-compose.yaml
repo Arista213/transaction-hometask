@@ -1,0 +1,54 @@
+version: "3"
+services:
+  backend-sample:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
+    environment:
+      DB_URL: jdbc:postgresql://backend-sample-postgres:5432/backend-sample
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    image: backend-sample:0.1.0-SNAPSHOT
+    ports:
+      - 8080:8080
+    depends_on:
+      - migrations
+  backend-sample-postgres:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: backend-sample
+    ports:
+      - 5432:5432
+  migrations:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 200M
+    restart: on-failure:5
+    image: liquibase/liquibase
+    environment:
+      liquibaseMode: local-test
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./src/main/resources:/liquibase/changelog
+    command:
+      - '--url=jdbc:postgresql://backend-sample-postgres:5432/backend-sample'
+      - '--changeLogFile=/changelog/migration.sql'
+      - '--username=${DB_USERNAME}'
+      - '--password=${DB_PASSWORD}'
+      - '--logLevel'
+      - 'info'
+      - 'update'
+    depends_on:
+      - backend-sample-postgres

@@ -3,33 +3,30 @@ package ru.tinkoff.backendacademy.petapp.repository.pet
 import ru.tinkoff.backendacademy.petapp.domain.Pet
 import zio.{Has, ZIO}
 
-import java.sql.SQLException
 import javax.sql.DataSource
 
 class DatabasePetRepository(ds: Has[DataSource]) extends PetRepository {
+
+  import ru.tinkoff.backendacademy.petapp.App.ctx
   import ru.tinkoff.backendacademy.petapp.App.ctx._
 
-  override def findPetName(petId: Int): ZIO[Any, String, String] = {
+  case class PetFullName(petId: Long, fullName: String)
 
-    val value: ZIO[Any, SQLException, List[String]] = run(
-      petByName(petId)
-    ).provide(ds)
-
-    value
-      .map(_.headOption)
-      .flatMap(s => ZIO.fromOption(s))
+  override def findPetName(petId: Long): ZIO[Any, String, String] = {
+    transaction(for {
+      pets <- ctx.run(quote {
+      query[Pet].filter(p => p.id == lift(petId))
+    })
+      maybeName = pets.headOption.map(_.name)
+      name <- ZIO.fromOption(maybeName).mapError(_ => new IllegalArgumentException("Could not find pet"))
+      _ <- ctx.run(quote(query[PetFullName].insert(PetFullName(lift(petId), lift("Mr. " + name)))))
+      //      _ <- fullNameService.getFullName(name)
+      fullName <- ZIO.cond(!name.startsWith("a"), "Mr. " + name, new IllegalArgumentException("Failed to get full name"))
+    } yield fullName)
+      .provide(ds)
       .mapError(e => s"Could not find pet: ${e}")
   }
 
-  def petByName(petId: Int) = {
-    quote {
-      query[Pet]
-        .filter(p => p.id == lift(petId))
-        .map(_.name)
-        .distinct
-        .take(1)
-    }
-  }
 }
 
 // SELECT DISTINCT p.name FROM pet p WHERE p.id = $1 LIMIT 1

@@ -16,7 +16,7 @@ class DatabaseOwnerRepository(ds: Has[DataSource]) extends OwnerRepository {
             query[Pet].filter(_.ownerId.contains(lift(ownerId)))
           )
         )
-          .mapError(_ => "Could not find pets")
+          .mapError(e => s"Could not find pets with same owner: $e")
           .provide(ds)
       case None => ZIO.succeed(Seq.empty[Pet])
     }

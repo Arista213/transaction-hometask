@@ -8,9 +8,9 @@ object PetEndpoints {
   def apply(
       petRepository: PetRepository
   ): ZServerEndpoint[Any, Any] = {
-    val petEndpoint: Endpoint[Unit, Int, String, String, Any] =
+    val petEndpoint: Endpoint[Unit, Long, String, String, Any] =
       endpoint.get
-        .in("pet" / path[Int]("petId"))
+        .in("pet" / path[Long]("petId"))
         .errorOut(stringBody)
         .out(stringBody)
 
