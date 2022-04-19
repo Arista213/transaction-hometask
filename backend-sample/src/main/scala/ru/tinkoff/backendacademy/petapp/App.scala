@@ -5,11 +5,9 @@ import com.typesafe.config.ConfigFactory
 import doobie.Transactor
 import io.getquill.context.ZioJdbc
 import io.getquill.{H2ZioJdbcContext, SnakeCase}
-import ru.tinkoff.backendacademy.petapp.db.MigrateDB
 import ru.tinkoff.backendacademy.petapp.http.{HttpServer, OwnerEndpoints, PetEndpoints}
 import ru.tinkoff.backendacademy.petapp.repository.owner.DatabaseOwnerRepository
 import ru.tinkoff.backendacademy.petapp.repository.pet.{DatabasePetRepository, LoggingPetRepository}
-import zio.blocking.Blocking
 import zio.interop.catz.asyncRuntimeInstance
 import zio.interop.catz.implicits.rts
 import zio.{ExitCode, Has, Task, URIO, ZEnv, ZIO, ZLayer}
@@ -60,7 +58,7 @@ object App extends zio.App {
           ) ++ OwnerEndpoints(databaseOwnerRepository)
           server = new HttpServer(endpoints)
         } yield server).build.orDie.use { server =>
-          (prepareDatabase(xa) *> server.server).exitCode
+          server.server.exitCode
         }
       }
   }
@@ -74,7 +72,4 @@ object App extends zio.App {
     }
   }
 
-  private def prepareDatabase(xa: Transactor[Task]): ZIO[Blocking, Throwable, Unit] = {
-    MigrateDB.run("migration.sql", xa)
-  }
 }
